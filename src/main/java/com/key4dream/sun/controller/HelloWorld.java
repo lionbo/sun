@@ -12,7 +12,7 @@ public class HelloWorld {
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public String get() {
-        return "get hello world";
+        return "get hello world auto deploy test";
     }
 
     @RequestMapping(method = RequestMethod.POST)
