@@ -18,7 +18,6 @@ public class HelloWorld {
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public String post() {
-
         return "post hello world";
     }
 }
