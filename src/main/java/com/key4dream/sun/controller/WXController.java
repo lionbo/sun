@@ -5,6 +5,9 @@ import java.io.InputStream;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -45,7 +48,13 @@ public class WXController {
                 byte[] body = new byte[httpRequest.getContentLength()];
                 is.read(body, 0, httpRequest.getContentLength());
                 String str = new String(body);
+
+                Document document = DocumentHelper.parseText(str);
+
                 logger.info(str);
+            } catch (DocumentException e) {
+                logger.error("DocumentException", e);
+                return Constants.REQUEST_FAIL;
             } finally {
                 is.close();
             }
