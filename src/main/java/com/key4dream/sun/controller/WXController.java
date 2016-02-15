@@ -41,7 +41,7 @@ public class WXController {
         return echostr;
     }
 
-    @RequestMapping(value = "/message/text", method = RequestMethod.POST)
+    @RequestMapping(value = "/checkSignature", method = RequestMethod.POST)
     @ResponseBody
     public String text(HttpServletRequest httpRequest) {
         try {
@@ -76,7 +76,6 @@ public class WXController {
         msg.setContent(root.elementTextTrim("Content"));
         msg.setCreateTime(Long.valueOf(root.elementTextTrim("CreateTime")));
         msg.setMsgId(Long.valueOf(root.elementTextTrim("MsgId")));
-
         return msg;
 
     }
