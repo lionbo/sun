@@ -26,7 +26,7 @@ public class WXController {
 
     private static Logger logger = LoggerFactory.getLogger(WXController.class);
 
-    @RequestMapping(value = "/checkSignature", method = RequestMethod.GET)
+    @RequestMapping(value = "/message", method = RequestMethod.GET)
     @ResponseBody
     public String get(@RequestParam("signature") String signature, @RequestParam("timestamp") String timestamp,
             @RequestParam("nonce") String nonce, @RequestParam("echostr") String echostr) {
@@ -41,7 +41,7 @@ public class WXController {
         return echostr;
     }
 
-    @RequestMapping(value = "/checkSignature", method = RequestMethod.POST)
+    @RequestMapping(value = "/message", method = RequestMethod.POST)
     @ResponseBody
     public String text(HttpServletRequest httpRequest) {
         try {
@@ -51,7 +51,6 @@ public class WXController {
                 is.read(body, 0, httpRequest.getContentLength());
                 String str = new String(body);
                 WXMsg wxMsg = this.extractWxMsg(str);
-                logger.info(str);
                 logger.info(wxMsg.toString());
             } catch (DocumentException e) {
                 logger.error("DocumentException", e);
