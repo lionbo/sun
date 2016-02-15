@@ -57,7 +57,9 @@ public class WXController {
                 reMsg.setToUserName(wxMsg.getFromUserName());
                 reMsg.setContent("你的OpenId是" + wxMsg.getFromUserName());
                 logger.info(wxMsg.toString());
-                return this.changeWxMsgToXML(reMsg);
+                String res = this.changeWxMsgToXML(reMsg);
+                logger.info(res);
+                return res;
             } catch (DocumentException e) {
                 logger.error("DocumentException", e);
                 return Constants.REQUEST_FAIL;
