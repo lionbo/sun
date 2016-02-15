@@ -58,6 +58,7 @@ public class WXController {
                 reMsg.setContent("你的OpenId是" + wxMsg.getFromUserName());
                 logger.info(wxMsg.toString());
                 String res = this.changeWxMsgToXML(reMsg);
+                logger.info("change finish-------------");
                 logger.info(res);
                 return res;
             } catch (DocumentException e) {
