@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.key4dream.sun.bo.WXMsg;
 import com.key4dream.sun.utils.Constants;
 
 @Controller
@@ -48,10 +50,9 @@ public class WXController {
                 byte[] body = new byte[httpRequest.getContentLength()];
                 is.read(body, 0, httpRequest.getContentLength());
                 String str = new String(body);
-
-                Document document = DocumentHelper.parseText(str);
-
+                WXMsg wxMsg = this.extractWxMsg(str);
                 logger.info(str);
+                logger.info(wxMsg.toString());
             } catch (DocumentException e) {
                 logger.error("DocumentException", e);
                 return Constants.REQUEST_FAIL;
@@ -63,6 +64,21 @@ public class WXController {
             return Constants.REQUEST_FAIL;
         }
         return Constants.REQUEST_SUCCESS;
+    }
+
+    private WXMsg extractWxMsg(String text) throws DocumentException {
+        Document document = DocumentHelper.parseText(text);
+        WXMsg msg = new WXMsg();
+        Element root = document.getRootElement();
+        msg.setToUserName(root.elementTextTrim("ToUserName"));
+        msg.setFromUserName(root.elementTextTrim("FromUserName"));
+        msg.setMsgType(root.elementTextTrim("MsgType"));
+        msg.setContent(root.elementTextTrim("Content"));
+        msg.setCreateTime(Long.valueOf(root.elementTextTrim("CreateTime")));
+        msg.setMsgId(Long.valueOf(root.elementTextTrim("MsgId")));
+
+        return msg;
+
     }
 
 }
