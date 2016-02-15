@@ -14,4 +14,8 @@ public final class Constants {
 
     public static final String MENU_CREATE_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=";
 
+    public static final String REQUEST_SUCCESS = "success";
+
+    public static final String REQUEST_FAIL = "fail";
+
 }

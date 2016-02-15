@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.key4dream.sun.utils.Constants;
+
 @Controller
 @RequestMapping(value = "/wx")
 public class WXController {
@@ -35,17 +37,22 @@ public class WXController {
     }
 
     @RequestMapping(value = "/message/text", method = RequestMethod.POST)
-    public void text(HttpServletRequest httpRequest) {
+    public String text(HttpServletRequest httpRequest) {
         try {
             InputStream is = httpRequest.getInputStream();
-            byte[] body = new byte[httpRequest.getContentLength()];
-            is.read(body, 0, httpRequest.getContentLength());
-            String str = new String(body);
-            logger.info(str);
+            try {
+                byte[] body = new byte[httpRequest.getContentLength()];
+                is.read(body, 0, httpRequest.getContentLength());
+                String str = new String(body);
+                logger.info(str);
+            } finally {
+                is.close();
+            }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error("IOException", e);
+            return Constants.REQUEST_FAIL;
         }
+        return Constants.REQUEST_SUCCESS;
     }
 
 }
