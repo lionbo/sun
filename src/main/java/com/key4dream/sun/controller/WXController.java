@@ -64,6 +64,9 @@ public class WXController {
             } catch (DocumentException e) {
                 logger.error("DocumentException", e);
                 return Constants.REQUEST_FAIL;
+            } catch (Exception e) {
+                logger.error("Exception", e);
+                return Constants.REQUEST_FAIL;
             } finally {
                 is.close();
             }
@@ -73,9 +76,17 @@ public class WXController {
         }
     }
 
+    //    public static void main(String[] args) {
+    //        WXMsg reMsg = new WXMsg();
+    //        reMsg.setToUserName("aaa");
+    //        reMsg.setFromUserName("bbb");
+    //        reMsg.setContent("test");
+    //        System.out.println(WXController.changeWxMsgToXML(reMsg));
+    //    }
+
     private String changeWxMsgToXML(WXMsg reMsg) {
         Document document = DocumentHelper.createDocument();
-        Element root = document.getRootElement();
+        Element root = document.addElement("xml");
         Element ToUserName = root.addElement("ToUserName");
         Element FromUserName = root.addElement("FromUserName");
         Element CreateTime = root.addElement("CreateTime");
