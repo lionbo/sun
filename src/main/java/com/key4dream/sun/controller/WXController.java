@@ -2,6 +2,7 @@ package com.key4dream.sun.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -51,7 +52,12 @@ public class WXController {
                 is.read(body, 0, httpRequest.getContentLength());
                 String str = new String(body);
                 WXMsg wxMsg = this.extractWxMsg(str);
+                WXMsg reMsg = new WXMsg();
+                reMsg.setFromUserName(wxMsg.getToUserName());
+                reMsg.setToUserName(wxMsg.getFromUserName());
+                reMsg.setContent("你的OpenId是" + wxMsg.getFromUserName());
                 logger.info(wxMsg.toString());
+                return this.changeWxMsgToXML(reMsg);
             } catch (DocumentException e) {
                 logger.error("DocumentException", e);
                 return Constants.REQUEST_FAIL;
@@ -62,7 +68,23 @@ public class WXController {
             logger.error("IOException", e);
             return Constants.REQUEST_FAIL;
         }
-        return Constants.REQUEST_SUCCESS;
+    }
+
+    private String changeWxMsgToXML(WXMsg reMsg) {
+        Document document = DocumentHelper.createDocument();
+        Element root = document.getRootElement();
+        Element ToUserName = root.addElement("ToUserName");
+        Element FromUserName = root.addElement("FromUserName");
+        Element CreateTime = root.addElement("CreateTime");
+        Element MsgType = root.addElement("MsgType");
+        Element Content = root.addElement("Content");
+
+        ToUserName.addCDATA(reMsg.getToUserName());
+        FromUserName.addCDATA(reMsg.getFromUserName());
+        CreateTime.setText(new Date().getTime() + "");
+        MsgType.addCDATA("text");
+        Content.addCDATA(reMsg.getContent());
+        return document.asXML();
     }
 
     private WXMsg extractWxMsg(String text) throws DocumentException {
