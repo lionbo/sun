@@ -109,8 +109,12 @@ public class WXController {
         msg.setFromUserName(root.elementTextTrim("FromUserName"));
         msg.setMsgType(root.elementTextTrim("MsgType"));
         msg.setContent(root.elementTextTrim("Content"));
-        msg.setCreateTime(Long.valueOf(root.elementTextTrim("CreateTime")));
-        msg.setMsgId(Long.valueOf(root.elementTextTrim("MsgId")));
+        if (root.elementTextTrim("CreateTime") != null) {
+            msg.setCreateTime(Long.valueOf(root.elementTextTrim("CreateTime")));
+        }
+        if (root.elementTextTrim("MsgId") != null) {
+            msg.setMsgId(Long.valueOf(root.elementTextTrim("MsgId")));
+        }
         return msg;
 
     }

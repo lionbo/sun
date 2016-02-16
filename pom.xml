@@ -8,7 +8,6 @@
   <packaging>war</packaging>
 
   <url>http://maven.apache.org</url>
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <spring.version>4.1.0.RELEASE</spring.version>
@@ -19,6 +18,7 @@
     <slf4j.version>1.7.12</slf4j.version>
     <log4j.version>2.4.1</log4j.version>
     <dom4j.version>1.6.1</dom4j.version>
+    
   </properties>
 
   <dependencies>
@@ -163,6 +163,11 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>edu.uci.ics</groupId>
+			<artifactId>crawler4j</artifactId>
+			<version>4.2</version>
 		</dependency>
   </dependencies>
   <build>
