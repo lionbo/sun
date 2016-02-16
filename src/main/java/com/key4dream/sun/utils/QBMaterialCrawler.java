@@ -3,6 +3,11 @@ package com.key4dream.sun.utils;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.crawler.CrawlController;
 import edu.uci.ics.crawler4j.crawler.Page;
@@ -48,18 +53,33 @@ public class QBMaterialCrawler extends WebCrawler {
             String html = htmlParseData.getHtml();
             Set<WebURL> links = htmlParseData.getOutgoingUrls();
 
+            Document doc = Jsoup.parse(html);
+            Elements articles = doc.select("div.article");
+            if (articles != null) {
+                for (Element article : articles) {
+                    Elements contents = article.select("div.content");
+                    String id = article.id();
+                    if (contents != null && contents.size() > 0) {
+                        Element content = contents.get(0);
+                        System.out.println(content);
+                    }
+                }
+            }
+
             System.out.println("Text length: " + text.length());
             System.out.println("Html length: " + html.length());
             System.out.println("Number of outgoing links: " + links.size());
         }
+
     }
 
     public static void main(String[] args) throws Exception {
-        String crawlStorageFolder = "/data/crawl/root";
-        int numberOfCrawlers = 7;
+        String crawlStorageFolder = "/tmp/crawl";
+        int numberOfCrawlers = 1;
 
         CrawlConfig config = new CrawlConfig();
         config.setCrawlStorageFolder(crawlStorageFolder);
+        config.setMaxDepthOfCrawling(2);
 
         /*
          * Instantiate the controller for this crawl.

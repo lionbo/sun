@@ -15,5 +15,5 @@
 	default-lazy-init="true">
 
 	<description>Spring公共配置</description>
-	<beans></beans>
+	<import resource="spring/sun-dao.xml" />
 </beans>
