@@ -26,6 +26,25 @@
     <mybatis-spring.version>1.2.3</mybatis-spring.version>
     <mysql-connector-java.version>5.1.24</mysql-connector-java.version>
   </properties>
+  
+  <profiles>
+     <profile>
+             <id>prod</id>
+             <properties>
+                     <package.environment>online</package.environment>
+             </properties>
+     </profile>
+     <profile>
+             <id>dev</id>
+             <activation>
+                     <activeByDefault>true</activeByDefault>
+             </activation>
+             <properties>
+                     <package.environment>offline</package.environment>
+             </properties>
+     </profile>
+  </profiles>
+  
 
   <dependencies>
     <dependency>
@@ -210,9 +229,23 @@
             <artifactId>guava</artifactId>
             <version>18.0</version>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
   </dependencies>
   <build>
   	<finalName>sun</finalName>
+  	<resources>
+       <resource>
+               <directory>src/main/resources/${package.environment}</directory>
+       </resource>
+       <resource>
+               <directory>src/main/resources/base</directory>
+       </resource>
+    </resources>
   	<plugins>
   		<plugin>
 				<groupId>org.eclipse.jetty</groupId>
