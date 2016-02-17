@@ -1,8 +1,7 @@
 package com.key4dream.sun.crawler;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.key4dream.sun.utils.PropertiesLoader;
+import com.key4dream.sun.utils.SpringUtils;
 
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.crawler.CrawlController;
@@ -12,8 +11,7 @@ import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 
 public class CrawlerMain {
 
-    @Autowired
-    private PropertiesLoader propertiesLoader;
+    private PropertiesLoader propertiesLoader = (PropertiesLoader) SpringUtils.getBean("propertiesLoader");
 
     public CrawlerMain() {
         this.init();
