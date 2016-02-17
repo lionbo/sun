@@ -69,7 +69,7 @@ public class QBMaterialCrawler extends WebCrawler {
     }
 
     public static void main(String[] args) throws Exception {
-        CrawlerMain main = new CrawlerMain();
+        CrawlerListener main = new CrawlerListener();
     }
 
 }

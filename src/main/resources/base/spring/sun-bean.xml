@@ -44,6 +44,6 @@
 	
 	<bean id="springUtils" class="com.key4dream.sun.utils.SpringUtils" lazy-init="false"/>
 	
-	<bean id="crawlerMain" class="com.key4dream.sun.crawler.CrawlerMain" lazy-init="false"/>
+	<bean id="crawlerListener" class="com.key4dream.sun.crawler.CrawlerListener" />
 	
 </beans>
