@@ -16,4 +16,5 @@
 
 	<description>Spring公共配置</description>
 	<import resource="spring/sun-dao.xml" />
+	<import resource="spring/sun-bean.xml" />
 </beans>
