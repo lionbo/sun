@@ -14,6 +14,7 @@ public class CrawlerMain {
     private PropertiesLoader propertiesLoader = (PropertiesLoader) SpringUtils.getBean("propertiesLoader");
 
     public CrawlerMain() {
+
         this.init();
     }
 
