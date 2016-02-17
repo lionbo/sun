@@ -7,6 +7,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.key4dream.sun.dao.MaterialMapper;
@@ -20,6 +22,8 @@ import edu.uci.ics.crawler4j.url.WebURL;
 
 @Component(value = "qbMaterialCrawler")
 public class QBMaterialCrawler extends WebCrawler {
+
+    private static Logger logger = LoggerFactory.getLogger(QBMaterialCrawler.class);
 
     private MaterialMapper mapper = (MaterialMapper) SpringUtils.getBean("materialMapper");
 
@@ -56,13 +60,11 @@ public class QBMaterialCrawler extends WebCrawler {
                         material.setMid(mid);
                         material.setContent(content.ownText());
                         mapper.add(material);
+                        logger.info(material.toString());
                     }
                 }
             }
 
-            System.out.println("Text length: " + text.length());
-            System.out.println("Html length: " + html.length());
-            System.out.println("Number of outgoing links: " + links.size());
         }
 
     }

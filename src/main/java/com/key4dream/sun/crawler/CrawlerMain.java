@@ -1,5 +1,8 @@
 package com.key4dream.sun.crawler;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.key4dream.sun.utils.PropertiesLoader;
 import com.key4dream.sun.utils.SpringUtils;
 
@@ -10,6 +13,8 @@ import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 
 public class CrawlerMain {
+
+    private static Logger logger = LoggerFactory.getLogger(CrawlerMain.class);
 
     private PropertiesLoader propertiesLoader = (PropertiesLoader) SpringUtils.getBean("propertiesLoader");
 
@@ -38,7 +43,7 @@ public class CrawlerMain {
             controller.addSeed("http://www.qiushibaike.com/text");
             controller.start(QBMaterialCrawler.class, numberOfCrawlers);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("crawler error", e);
         }
 
     }
