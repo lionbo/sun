@@ -16,7 +16,6 @@ function getData(currentId) {
               currentId=this.articleId;
             });
             $("#currentId").html(currentId);
-            $('.animation_image').hide();
             loading = false;
           }
         },
@@ -37,6 +36,7 @@ $(document).ready(function() {
                 loading = true; //prevent further ajax loading
                 $('.animation_image').show(); //show loading image
                 getData($("#currentId").html());
+                $('.animation_image').hide();
             }
         }
     });
