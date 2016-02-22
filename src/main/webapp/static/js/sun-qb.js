@@ -11,7 +11,7 @@ function getData(currentId) {
         success: function(data , textStatus){
           if (data.data) {
             $.each(data.data, function() {
-              $("#qb_tbody").append('<hr align="left" width="600px" color="#FF0000" size="15"/><div class="row"><div class="col-md-4"> ' + '<strong>' +
+              $("#qb_tbody").append('<hr align="left" color="#FF0000"/><div class="row"><div class="col-md-4"> ' + '<strong>' +
                   this.content + '</strong></div></div>');
               currentId=this.articleId;
             });
