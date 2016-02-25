@@ -55,7 +55,12 @@ public class WXController {
                 WXMsg reMsg = new WXMsg();
                 reMsg.setFromUserName(wxMsg.getToUserName());
                 reMsg.setToUserName(wxMsg.getFromUserName());
-                reMsg.setContent("你的OpenId是" + wxMsg.getFromUserName());
+                if (wxMsg.getContent().contains("笑话")) {
+                    reMsg.setContent("http://www.key4dream.com/static/qb.html");
+                } else {
+                    reMsg.setContent("你的OpenId是" + wxMsg.getFromUserName());
+                }
+
                 logger.info(wxMsg.toString());
                 String res = this.changeWxMsgToXML(reMsg);
                 logger.info("change finish-------------");
