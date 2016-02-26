@@ -69,6 +69,7 @@ public class WXController {
                         sb.append(entry.getKey());
                         sb.append("\n");
                         sb.append(entry.getValue());
+                        sb.append("\n");
                     }
                     reMsg.setContent(sb.toString());
                 } else {
