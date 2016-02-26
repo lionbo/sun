@@ -51,6 +51,7 @@ public class WXController {
     public String text(HttpServletRequest httpRequest) {
         try {
             InputStream is = httpRequest.getInputStream();
+
             try {
                 byte[] body = new byte[httpRequest.getContentLength()];
                 is.read(body, 0, httpRequest.getContentLength());
