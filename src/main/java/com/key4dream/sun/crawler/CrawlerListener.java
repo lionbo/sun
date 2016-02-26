@@ -67,7 +67,6 @@ public class CrawlerListener implements ApplicationListener<ContextRefreshedEven
             }, 10, 3600 * 1000);
 
             timer.scheduleAtFixedRate(new TimerTask() {
-
                 @Override
                 public void run() {
                     org.jsoup.nodes.Document document;
