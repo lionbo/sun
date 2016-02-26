@@ -69,34 +69,44 @@ public class CrawlerListener implements ApplicationListener<ContextRefreshedEven
             timer.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
-                    org.jsoup.nodes.Document document;
-                    List<String> keywords = new ArrayList<String>();
-                    keywords.add("地址1");
-                    keywords.add("地址2");
-                    keywords.add("地址3");
-                    keywords.add("地址4");
-                    keywords.add("手机地址");
-                    try {
-                        document = Jsoup.parse(new URL("https://groups.yahoo.com/neo/groups/caoliushequn/info"),
-                                1000 * 60);
-                        Elements selects = document.select("div.section-row-desc a");
-                        if (selects != null) {
-                            Map<String, String> urlList = new HashMap<String, String>();
-                            for (org.jsoup.nodes.Element element : selects) {
-                                if (keywords.contains(element.ownText().trim())) {
-                                    urlList.put(element.ownText(), element.attr("abs:href"));
+                    boolean hasError = false;
+                    for (int i = 0; i < 10; i++) {
+                        org.jsoup.nodes.Document document;
+                        List<String> keywords = new ArrayList<String>();
+                        keywords.add("地址1");
+                        keywords.add("地址2");
+                        keywords.add("地址3");
+                        keywords.add("地址4");
+                        keywords.add("手机地址");
+                        try {
+                            document = Jsoup.parse(new URL("https://groups.yahoo.com/neo/groups/caoliushequn/info"),
+                                    1000 * 60);
+                            Elements selects = document.select("div.section-row-desc a");
+                            if (selects != null) {
+                                Map<String, String> urlList = new HashMap<String, String>();
+                                for (org.jsoup.nodes.Element element : selects) {
+                                    if (keywords.contains(element.ownText().trim())) {
+                                        urlList.put(element.ownText(), element.attr("abs:href"));
+                                    }
+                                }
+                                if (urlList != null && urlList.size() > 0) {
+                                    CacheMapNeverDel.instance().put("wycl", urlList);
                                 }
                             }
-                            if (urlList != null && urlList.size() > 0) {
-                                CacheMapNeverDel.instance().put("wycl", urlList);
-                            }
+                        } catch (MalformedURLException e) {
+                            logger.error("crawler error", e);
+                            hasError = true;
+                        } catch (IOException e) {
+                            logger.error("crawler error", e);
+                            hasError = true;
+                        } catch (Exception e) {
+                            logger.error("crawler error", e);
+                            hasError = true;
                         }
-                    } catch (MalformedURLException e) {
-                        logger.error("crawler error", e);
-                    } catch (IOException e) {
-                        logger.error("crawler error", e);
+                        if (!hasError) {
+                            break;
+                        }
                     }
-
                 }
             }, 10, 3600 * 1000);
 
