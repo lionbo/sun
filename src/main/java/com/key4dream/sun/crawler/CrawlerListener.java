@@ -66,7 +66,8 @@ public class CrawlerListener implements ApplicationListener<ContextRefreshedEven
                 }
             }, 10, 3600 * 1000);
 
-            timer.scheduleAtFixedRate(new TimerTask() {
+            Timer timer2 = new Timer("cllist", true);
+            timer2.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
                     boolean hasError = false;
@@ -95,13 +96,13 @@ public class CrawlerListener implements ApplicationListener<ContextRefreshedEven
                                 }
                             }
                         } catch (MalformedURLException e) {
-                            logger.error("crawler error", e);
+                            logger.error("cllist error", e);
                             hasError = true;
                         } catch (IOException e) {
-                            logger.error("crawler error", e);
+                            logger.error("cllist error", e);
                             hasError = true;
                         } catch (Exception e) {
-                            logger.error("crawler error", e);
+                            logger.error("cllist error", e);
                             hasError = true;
                         }
                         if (!hasError) {
