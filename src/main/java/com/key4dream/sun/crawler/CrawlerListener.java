@@ -91,6 +91,7 @@ public class CrawlerListener implements ApplicationListener<ContextRefreshedEven
                                 }
                                 if (urlList != null && urlList.size() > 0) {
                                     CacheMapNeverDel.instance().put("wycl", urlList);
+                                    logger.info("get cl list:" + urlList);
                                 }
                             }
                         } catch (MalformedURLException e) {
