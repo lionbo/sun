@@ -3,6 +3,9 @@ package com.key4dream.sun.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.key4dream.sun.bo.WXMsg;
+import com.key4dream.sun.utils.CacheMapNeverDel;
 import com.key4dream.sun.utils.Constants;
 
 @Controller
@@ -57,6 +61,15 @@ public class WXController {
                 reMsg.setToUserName(wxMsg.getFromUserName());
                 if (wxMsg.getContent().contains("笑话")) {
                     reMsg.setContent("http://www.key4dream.com/static/qb.html");
+                } else if (wxMsg.getContent().equalsIgnoreCase("wycl")) {
+                    Map<String, String> urlList = (Map<String, String>) CacheMapNeverDel.instance().get("wycl");
+                    StringBuilder sb = new StringBuilder();
+                    for (Entry<String, String> entry : urlList.entrySet()) {
+                        sb.append(entry.getKey());
+                        sb.append("\n");
+                        sb.append(entry.getValue());
+                    }
+                    reMsg.setContent(sb.toString());
                 } else {
                     reMsg.setContent("你的OpenId是" + wxMsg.getFromUserName());
                 }
@@ -79,6 +92,11 @@ public class WXController {
             logger.error("IOException", e);
             return Constants.REQUEST_FAIL;
         }
+    }
+
+    private Map<String, String> getClList() {
+        Map<String, String> map = new HashMap<String, String>();
+        return map;
     }
 
     //    public static void main(String[] args) {
