@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -91,8 +92,22 @@ public class CrawlerListener implements ApplicationListener<ContextRefreshedEven
                                     }
                                 }
                                 if (urlList != null && urlList.size() > 0) {
-                                    CacheMapNeverDel.instance().put("wycl", urlList);
-                                    logger.info("get cl list:" + urlList);
+                                    Map<String, String> existList = (Map<String, String>) CacheMapNeverDel.instance()
+                                            .get("wycl");
+                                    boolean haschanged = false;
+                                    for (Entry<String, String> entry : urlList.entrySet()) {
+                                        if (!existList.get(entry.getKey()).equalsIgnoreCase(entry.getValue())) {
+                                            CacheMapNeverDel.instance().put("wycl", urlList);
+                                            haschanged = true;
+                                            break;
+                                        }
+                                    }
+                                    if (haschanged) {
+                                        logger.info("get new cllist:" + urlList);
+                                    } else {
+                                        logger.info("current cllist:" + urlList);
+                                    }
+
                                 }
                             }
                         } catch (MalformedURLException e) {
