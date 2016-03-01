@@ -42,6 +42,11 @@ public class CrawlerListener implements ApplicationListener<ContextRefreshedEven
             timer.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
+                    crawlQb();
+                    crawCl();
+                }
+
+                private void crawlQb() {
                     logger.info("crawl" + new Date() + "-----start");
                     String crawlStorageFolder = "/tmp/crawl";
                     int numberOfCrawlers = propertiesLoader.getInteger("crawlerThreadNumer");
@@ -65,12 +70,8 @@ public class CrawlerListener implements ApplicationListener<ContextRefreshedEven
                         logger.error("crawler error", e);
                     }
                 }
-            }, 10, 3600 * 1000);
 
-            Timer timer2 = new Timer("cllist", true);
-            timer2.scheduleAtFixedRate(new TimerTask() {
-                @Override
-                public void run() {
+                private void crawCl() {
                     boolean hasError = false;
                     for (int i = 0; i < 10; i++) {
                         org.jsoup.nodes.Document document;
@@ -125,6 +126,7 @@ public class CrawlerListener implements ApplicationListener<ContextRefreshedEven
                         }
                     }
                 }
+
             }, 10, 3600 * 1000);
 
         }
