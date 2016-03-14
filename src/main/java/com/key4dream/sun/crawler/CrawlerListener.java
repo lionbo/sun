@@ -96,9 +96,13 @@ public class CrawlerListener implements ApplicationListener<ContextRefreshedEven
                                 if (urlList != null && urlList.size() > 0) {
                                     Map<String, String> existList = (Map<String, String>) CacheMapNeverDel.instance()
                                             .get(Constants.KEY_WORD_WYCL);
+                                    if (existList == null) {
+                                        existList = new HashMap<String, String>();
+                                    }
                                     boolean haschanged = false;
                                     for (Entry<String, String> entry : urlList.entrySet()) {
-                                        if (!existList.get(entry.getKey()).equalsIgnoreCase(entry.getValue())) {
+                                        if (existList.get(entry.getKey()) != null
+                                                && !existList.get(entry.getKey()).equalsIgnoreCase(entry.getValue())) {
                                             CacheMapNeverDel.instance().put(Constants.KEY_WORD_WYCL, urlList);
                                             haschanged = true;
                                             break;
