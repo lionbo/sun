@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,7 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.key4dream.sun.bo.WXMsg;
-import com.key4dream.sun.utils.CacheMapNeverDel;
+import com.key4dream.sun.handler.HandlerDirector;
+import com.key4dream.sun.handler.IHandler;
 import com.key4dream.sun.utils.Constants;
 
 @Controller
@@ -60,25 +60,12 @@ public class WXController {
                 WXMsg reMsg = new WXMsg();
                 reMsg.setFromUserName(wxMsg.getToUserName());
                 reMsg.setToUserName(wxMsg.getFromUserName());
-                if (wxMsg.getContent().contains("笑话")) {
-                    reMsg.setContent("http://www.key4dream.com/static/qb.html");
-                } else if (wxMsg.getContent().equalsIgnoreCase("wycl")) {
-                    Map<String, String> urlList = (Map<String, String>) CacheMapNeverDel.instance()
-                            .get(Constants.KEY_WORD_WYCL);
-                    StringBuilder sb = new StringBuilder();
-                    if (urlList == null) {
-                        sb.append("url fetch failed");
-                    } else {
-                        for (Entry<String, String> entry : urlList.entrySet()) {
-                            sb.append(entry.getKey());
-                            sb.append("\n");
-                            sb.append(entry.getValue());
-                            sb.append("\n");
-                        }
-                    }
-                    reMsg.setContent(sb.toString());
-                } else {
+                IHandler handler = HandlerDirector.getHandler(wxMsg.getContent());
+
+                if (handler == null) {
                     reMsg.setContent("你的OpenId是" + wxMsg.getFromUserName());
+                } else {
+                    reMsg.setContent(handler.process(wxMsg.getContent()));
                 }
 
                 logger.info(wxMsg.toString());

@@ -20,4 +20,8 @@ public final class Constants {
 
     public static final String KEY_WORD_WYCL = "wycl";
 
+    public static final String KEY_WORD_XH = "xh";
+
+    public static final String KEY_WORD_XP = "xp";
+
 }
