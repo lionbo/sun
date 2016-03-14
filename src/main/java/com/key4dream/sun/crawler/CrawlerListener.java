@@ -20,6 +20,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
 import com.key4dream.sun.utils.CacheMapNeverDel;
+import com.key4dream.sun.utils.Constants;
 import com.key4dream.sun.utils.PropertiesLoader;
 import com.key4dream.sun.utils.SpringUtils;
 
@@ -94,11 +95,11 @@ public class CrawlerListener implements ApplicationListener<ContextRefreshedEven
                                 }
                                 if (urlList != null && urlList.size() > 0) {
                                     Map<String, String> existList = (Map<String, String>) CacheMapNeverDel.instance()
-                                            .get("wycl");
+                                            .get(Constants.KEY_WORD_WYCL);
                                     boolean haschanged = false;
                                     for (Entry<String, String> entry : urlList.entrySet()) {
                                         if (!existList.get(entry.getKey()).equalsIgnoreCase(entry.getValue())) {
-                                            CacheMapNeverDel.instance().put("wycl", urlList);
+                                            CacheMapNeverDel.instance().put(Constants.KEY_WORD_WYCL, urlList);
                                             haschanged = true;
                                             break;
                                         }

@@ -63,13 +63,18 @@ public class WXController {
                 if (wxMsg.getContent().contains("笑话")) {
                     reMsg.setContent("http://www.key4dream.com/static/qb.html");
                 } else if (wxMsg.getContent().equalsIgnoreCase("wycl")) {
-                    Map<String, String> urlList = (Map<String, String>) CacheMapNeverDel.instance().get("wycl");
+                    Map<String, String> urlList = (Map<String, String>) CacheMapNeverDel.instance()
+                            .get(Constants.KEY_WORD_WYCL);
                     StringBuilder sb = new StringBuilder();
-                    for (Entry<String, String> entry : urlList.entrySet()) {
-                        sb.append(entry.getKey());
-                        sb.append("\n");
-                        sb.append(entry.getValue());
-                        sb.append("\n");
+                    if (urlList == null) {
+                        sb.append("url fetch failed");
+                    } else {
+                        for (Entry<String, String> entry : urlList.entrySet()) {
+                            sb.append(entry.getKey());
+                            sb.append("\n");
+                            sb.append(entry.getValue());
+                            sb.append("\n");
+                        }
                     }
                     reMsg.setContent(sb.toString());
                 } else {

@@ -18,4 +18,6 @@ public final class Constants {
 
     public static final String REQUEST_FAIL = "fail";
 
+    public static final String KEY_WORD_WYCL = "wycl";
+
 }
