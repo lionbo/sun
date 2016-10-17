@@ -58,7 +58,7 @@ public class QBMaterialCrawler extends WebCrawler {
                         Element content = contents.get(0);
                         Material material = new Material();
                         material.setMid(mid);
-                        material.setContent(content.ownText());
+                        material.setContent(content.child(0).ownText());
                         mapper.add(material);
                         logger.info(material.toString());
                     }
